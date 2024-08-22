@@ -34,40 +34,49 @@ public class EmployeePerformanceSystem {
                 int choice = sc.nextInt();
                 sc.nextLine();
 
-                switch (choice) {
-                    case 1:
-                        checkVacancyAvailability();
-                        break;
-                    case 2:
-                        registerEmployee(sc);
-                        break;
-                    case 3:
-                        deleteEmployee(sc);
-                        break;
-                    case 4:
-                        findEmployee(sc);
-                        break;
-                    case 5:
-                        storeEmployeeDetails();
-                        break;
-                    case 6:
-                        loadEmployeeDetails();
-                        break;
-                    case 7:
-                        viewEmployeesSortedByName();
-                        break;
-                    case 8:
-                        manageEmployeePerformance(sc);
-                        break;
-                    case 9:
-                        generateReports(sc);
-                        break;
-                    case 10:
-                        System.out.println("Exiting...");
-                        return;
-                    default:
-                        System.out.println("Invalid option. Please try again.");
+                if (choice >= 1 && choice <= 10) {
+
+
+                    switch (choice) {
+                        case 1:
+                            checkVacancyAvailability();
+                            break;
+                        case 2:
+                            registerEmployee(sc);
+                            break;
+                        case 3:
+                            deleteEmployee(sc);
+                            break;
+                        case 4:
+                            findEmployee(sc);
+                            break;
+                        case 5:
+                            storeEmployeeDetails();
+                            break;
+                        case 6:
+                            loadEmployeeDetails();
+                            break;
+                        case 7:
+                            viewEmployeesSortedByName();
+                            break;
+                        case 8:
+                            manageEmployeePerformance(sc);
+                            break;
+                        case 9:
+                            generateReports(sc);
+                            break;
+                        case 10:
+                            System.out.println("Exiting...");
+                            return;
+                        default:
+                            System.out.println("Invalid option. Please try again.");
+                            break;
+                    }
                 }
+                else{
+                    System.out.println("Invalid option. Please try again.");
+                }
+
             } catch (Exception e) {
 
                 System.out.println("Invalid option. Please try again!");
