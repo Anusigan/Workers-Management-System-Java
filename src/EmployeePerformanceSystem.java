@@ -6,12 +6,12 @@ public class EmployeePerformanceSystem {
     private static final int MAX_EMPLOYEES = 40;
     private static Employee[] employees = new Employee[MAX_EMPLOYEES];
     private static int employeeCount = 0;
-
+    static Scanner sc = new Scanner(System.in);
 
 
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+
         while (true) {
             System.out.println("\n--- Employee Performance Management System ---");
             System.out.println("1. Check available number of vacancies");
@@ -25,21 +25,21 @@ public class EmployeePerformanceSystem {
             System.out.println("9. Generate reports");
             System.out.println("10. Exit");
             System.out.print("Select an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // consume newline
+            int choice = sc.nextInt();
+            sc.nextLine();
 
             switch (choice) {
                 case 1:
                     checkVacancyAvailability();
                     break;
                 case 2:
-                    registerEmployee(scanner);
+                    registerEmployee(sc);
                     break;
                 case 3:
-                    deleteEmployee(scanner);
+                    deleteEmployee(sc);
                     break;
                 case 4:
-                    findEmployee(scanner);
+                    findEmployee(sc);
                     break;
                 case 5:
                     storeEmployeeDetails();
@@ -51,10 +51,10 @@ public class EmployeePerformanceSystem {
                     viewEmployeesSortedByName();
                     break;
                 case 8:
-                    manageEmployeePerformance(scanner);
+                    manageEmployeePerformance(sc);
                     break;
                 case 9:
-                    generateReports(scanner);
+                    generateReports(sc);
                     break;
                 case 10:
                     System.out.println("Exiting...");
