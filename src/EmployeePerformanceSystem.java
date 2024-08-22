@@ -7,6 +7,9 @@ public class EmployeePerformanceSystem {
     private static Employee[] employees = new Employee[MAX_EMPLOYEES];
     private static int employeeCount = 0;
 
+
+
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
