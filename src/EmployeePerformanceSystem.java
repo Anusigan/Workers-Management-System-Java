@@ -11,19 +11,25 @@ public class EmployeePerformanceSystem {
 
 
     public static void main(String[] args) {
+        System.out.println("\t** WELCOME TO EMPLOYEE PERFORMANCE MANAGEMENT SYSTEM **\n");
 
         while (true) {
-            System.out.println("\n--- Employee Performance Management System ---");
-            System.out.println("1. Check available number of vacancies");
-            System.out.println("2. Register employee (with ID)");
-            System.out.println("3. Delete employee");
-            System.out.println("4. Find employee (with employee ID)");
-            System.out.println("5. Store employee details into a file");
-            System.out.println("6. Load employee details from the file to the system");
-            System.out.println("7. View the list of employees based on their names");
-            System.out.println("8. Manage employee performance");
-            System.out.println("9. Generate reports");
-            System.out.println("10. Exit");
+            System.out.println("\t\t\t******************************");
+            System.out.println("\t\t\t\t\t\tMAIN MENU\t\t\t\t\t\t");
+            System.out.println("\t\t\t******************************");
+            System.out.println("1.Check available vacancies");
+            System.out.println("2.Register an employee (with ID)");
+            System.out.println("3.Delete an employee");
+            System.out.println("4.Find an employee (with ID)");
+            System.out.println("5.Store employee details into a file");
+            System.out.println("6.Load employee details from the file to the system");
+            System.out.println("7.View the list of employees based on their names");
+            System.out.println("8.Manage employee performance");
+            System.out.println("9.Generate reports");
+            System.out.println("10.Exit");
+
+
+
             System.out.print("Select an option: ");
             int choice = sc.nextInt();
             sc.nextLine();
