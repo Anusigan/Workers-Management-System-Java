@@ -1,19 +1,16 @@
 import java.io.*;
 import java.util.Scanner;
 
-
 public class EmployeePerformanceSystem {
     private static final int MAX_EMPLOYEES = 40;
     private static Employee[] employees = new Employee[MAX_EMPLOYEES];
     private static int employeeCount = 0;
-    static Scanner sc = new Scanner(System.in);
-
-
+    public static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        System.out.println("\t** WELCOME TO EMPLOYEE PERFORMANCE MANAGEMENT SYSTEM **\n");
+        System.out.println("\n\n\t** WELCOME TO EMPLOYEE PERFORMANCE MANAGEMENT SYSTEM **\n");
 
-        while (true) {
+        while (true) { // Loop to keep showing the menu until the user exits
             System.out.println("\t\t\t******************************");
             System.out.println("\t\t\t\t\t\tMAIN MENU\t\t\t\t\t\t");
             System.out.println("\t\t\t******************************");
@@ -28,65 +25,55 @@ public class EmployeePerformanceSystem {
             System.out.println("9.Generate reports");
             System.out.println("10.Exit");
 
-
             try {
-                System.out.print("Select an option: ");
+                System.out.print("\nSelect an option: ");
                 int choice = sc.nextInt();
-                sc.nextLine();
+                sc.nextLine(); // Consume newline
 
-                if (choice >= 1 && choice <= 10) {
-
-
-                    switch (choice) {
-                        case 1:
-                            checkVacancyAvailability();
-                            break;
-                        case 2:
-                            registerEmployee(sc);
-                            break;
-                        case 3:
-                            deleteEmployee(sc);
-                            break;
-                        case 4:
-                            findEmployee(sc);
-                            break;
-                        case 5:
-                            storeEmployeeDetails();
-                            break;
-                        case 6:
-                            loadEmployeeDetails();
-                            break;
-                        case 7:
-                            viewEmployeesSortedByName();
-                            break;
-                        case 8:
-                            manageEmployeePerformance(sc);
-                            break;
-                        case 9:
-                            generateReports(sc);
-                            break;
-                        case 10:
-                            System.out.println("Exiting...");
-                            return;
-                        default:
-                            System.out.println("Invalid option. Please try again.");
-                            break;
-                    }
+                switch (choice) {
+                    case 1:
+                        checkVacancyAvailability();
+                        break;
+                    case 2:
+                        registerEmployee(sc);
+                        break;
+                    case 3:
+                        deleteEmployee(sc);
+                        break;
+                    case 4:
+                        findEmployee(sc);
+                        break;
+                    case 5:
+                        storeEmployeeDetails();
+                        break;
+                    case 6:
+                        loadEmployeeDetails();
+                        break;
+                    case 7:
+                        viewEmployeesSortedByName();
+                        break;
+                    case 8:
+                        manageEmployeePerformance(sc);
+                        break;
+                    case 9:
+                        generateReports(sc);
+                        break;
+                    case 10:
+                        System.out.println("Exiting...");
+                        return; // Exit the program
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                        break;
                 }
-                else{
-                    System.out.println("Invalid option. Please try again.");
-                }
-
             } catch (Exception e) {
-
-                System.out.println("Invalid option. Please try again!");
-
+                System.out.println("Invalid input. Please enter a valid option!");
+                sc.nextLine(); // Clear the invalid input
             }
         }
     }
 
     private static void checkVacancyAvailability() {
-        System.out.println("Available vacancies: " + (MAX_EMPLOYEES - employeeCount));
+        System.out.println("\nAvailable workers vacancies: " + (MAX_EMPLOYEES - employeeCount));
     }
 
     private static void registerEmployee(Scanner scanner) {
@@ -95,10 +82,49 @@ public class EmployeePerformanceSystem {
             return;
         }
 
-        System.out.print("Enter employee ID: ");
-        String id = scanner.nextLine();
-        System.out.print("Enter employee name: ");
-        String name = scanner.nextLine();
+        String id;
+        String name;
+
+        // Validate ID
+        while (true) {
+            System.out.print("Enter employee ID (7 characters long and starts with 'S'): ");
+            id = scanner.nextLine().trim();
+
+
+            if (id == null || id.isEmpty() || id.length() != 7 || id.charAt(0) != 'S') {
+                System.out.println("Invalid ID. ID must be 7 characters long and start with 'S'. Please try again.");
+                continue;
+            }
+
+
+            boolean idExists = false;
+            for (int i = 0; i < employeeCount; i++) {
+                if (employees[i].getId().equals(id)) {
+                    idExists = true;
+                    break;
+                }
+            }
+
+            if (idExists) {
+                System.out.println("This ID is already registered. Please enter a unique ID.");
+            } else {
+                break;
+            }
+        }
+
+
+        while (true) {
+            System.out.print("Enter employee name: ");
+            name = scanner.nextLine().trim();
+
+            // Check if name is null or empty
+            if (name == null || name.isEmpty()) {
+                System.out.println("Employee name cannot be null or empty. Please try again.");
+            } else {
+                break;
+            }
+        }
+
 
         employees[employeeCount] = new Employee(id, name);
         employeeCount++;
@@ -106,21 +132,43 @@ public class EmployeePerformanceSystem {
     }
 
     private static void deleteEmployee(Scanner scanner) {
-        System.out.print("Enter employee ID to delete: ");
-        String id = scanner.nextLine();
+        System.out.print("Enter employee ID to delete (7 characters long and starts with 'S'): ");
+        String id = scanner.nextLine().trim();
 
+        // Validate the ID format
+        if (id == null || id.isEmpty() || id.length() != 7 || id.charAt(0) != 'S') {
+            System.out.println("Invalid ID. ID must be 7 characters long and start with 'S'.");
+            return;
+        }
+
+        // Search for the employee
         for (int i = 0; i < employeeCount; i++) {
             if (employees[i].getId().equals(id)) {
-                for (int j = i; j < employeeCount - 1; j++) {
-                    employees[j] = employees[j + 1];
+                // Display employee details
+                System.out.println("Employee found:");
+                System.out.println("ID: " + employees[i].getId());
+                System.out.println("Name: " + employees[i].getName());
+
+                // Ask for confirmation
+                System.out.print("Do you want to delete this employee? (yes/no): ");
+                String confirmation = scanner.nextLine().trim().toLowerCase();
+
+                if (confirmation.equals("yes")) {
+                    // Delete the employee
+                    for (int j = i; j < employeeCount - 1; j++) {
+                        employees[j] = employees[j + 1];
+                    }
+                    employeeCount--;
+                    System.out.println("Employee deleted successfully.");
+                } else {
+                    System.out.println("Deletion cancelled.");
                 }
-                employeeCount--;
-                System.out.println("Employee deleted successfully.");
                 return;
             }
         }
         System.out.println("Employee not found.");
     }
+
 
     private static void findEmployee(Scanner scanner) {
         System.out.print("Enter employee ID to find: ");
@@ -265,12 +313,25 @@ public class EmployeePerformanceSystem {
         }
 
         System.out.println("Detailed Report:");
-        System.out.println("ID | Name | Project 1 | Project 2 | Project 3 | Total | Average | Grade");
+        System.out.println("Employee Name\tAverage Score\tPerformance");
+
         for (int i = 0; i < employeeCount; i++) {
-            if (employees[i].getProject() != null) {
-                employees[i].displayReport();
-            } else {
-                System.out.println(employees[i].getId() + " | " + employees[i].getName() + " | NA | NA | NA | NA | NA | NA");
+            Project project = employees[i].getProject();
+            if (project != null) {
+                double averageScore = project.getAverageScore();
+                String performance;
+
+                if (averageScore >= 80) {
+                    performance = "Excellent";
+                } else if (averageScore >= 60) {
+                    performance = "Good";
+                } else if (averageScore >= 40) {
+                    performance = "Average";
+                } else {
+                    performance = "Poor";
+                }
+
+                System.out.println(employees[i].getName() + "\t" + averageScore + "\t\t" + performance);
             }
         }
     }
