@@ -171,9 +171,16 @@ public class EmployeePerformanceSystem {
 
 
     private static void findEmployee(Scanner scanner) {
-        System.out.print("Enter employee ID to find: ");
-        String id = scanner.nextLine();
+        System.out.print("Enter employee ID to find (7 characters long and starts with 'S'): ");
+        String id = scanner.nextLine().trim();
 
+        // Validate the ID format
+        if (id == null || id.isEmpty() || id.length() != 7 || id.charAt(0) != 'S') {
+            System.out.println("Invalid ID. ID must be 7 characters long and start with 'S'.");
+            return;
+        }
+
+        // Search for the employee
         for (int i = 0; i < employeeCount; i++) {
             if (employees[i].getId().equals(id)) {
                 System.out.println("Employee found: " + employees[i].getName());
@@ -182,6 +189,7 @@ public class EmployeePerformanceSystem {
         }
         System.out.println("Employee not found.");
     }
+
 
     private static void storeEmployeeDetails() {
         try (PrintWriter writer = new PrintWriter(new File("employee_data.txt"))) {
@@ -240,26 +248,71 @@ public class EmployeePerformanceSystem {
     }
 
     private static void manageEmployeePerformance(Scanner scanner) {
-        System.out.print("Enter employee ID: ");
-        String id = scanner.nextLine();
+        String id;
+        int score1 = -1, score2 = -1, score3 = -1;
 
-        for (int i = 0; i < employeeCount; i++) {
-            if (employees[i].getId().equals(id)) {
-                System.out.print("Enter score for Project 1: ");
-                int score1 = scanner.nextInt();
-                System.out.print("Enter score for Project 2: ");
-                int score2 = scanner.nextInt();
-                System.out.print("Enter score for Project 3: ");
-                int score3 = scanner.nextInt();
-                scanner.nextLine();  // consume newline
+        // Validate and get employee ID
+        while (true) {
+            System.out.print("Enter employee ID (7 characters long and starts with 'S'): ");
+            id = scanner.nextLine().trim();
 
-                employees[i].setProjectScores(score1, score2, score3);
-                System.out.println("Performance data updated successfully.");
-                return;
+            if (id.length() == 7 && id.charAt(0) == 'S') {
+                boolean found = false;
+                for (int i = 0; i < employeeCount; i++) {
+                    if (employees[i].getId().equals(id)) {
+                        found = true;
+                        // Get and validate project scores
+                        while (score1 < 0 || score1 > 100) {
+                            System.out.print("Enter score for Project 1 (0-100): ");
+                            if (scanner.hasNextInt()) {
+                                score1 = scanner.nextInt();
+                                if (score1 < 0 || score1 > 100) {
+                                    System.out.println("Invalid score. Please enter a value between 0 and 100.");
+                                }
+                            } else {
+                                System.out.println("Invalid input. Please enter a valid integer.");
+                                scanner.next(); // Consume invalid input
+                            }
+                        }
+                        while (score2 < 0 || score2 > 100) {
+                            System.out.print("Enter score for Project 2 (0-100): ");
+                            if (scanner.hasNextInt()) {
+                                score2 = scanner.nextInt();
+                                if (score2 < 0 || score2 > 100) {
+                                    System.out.println("Invalid score. Please enter a value between 0 and 100.");
+                                }
+                            } else {
+                                System.out.println("Invalid input. Please enter a valid integer.");
+                                scanner.next(); // Consume invalid input
+                            }
+                        }
+                        while (score3 < 0 || score3 > 100) {
+                            System.out.print("Enter score for Project 3 (0-100): ");
+                            if (scanner.hasNextInt()) {
+                                score3 = scanner.nextInt();
+                                if (score3 < 0 || score3 > 100) {
+                                    System.out.println("Invalid score. Please enter a value between 0 and 100.");
+                                }
+                            } else {
+                                System.out.println("Invalid input. Please enter a valid integer.");
+                                scanner.next(); // Consume invalid input
+                            }
+                        }
+
+                        scanner.nextLine(); // Consume newline after integer input
+                        employees[i].setProjectScores(score1, score2, score3);
+                        System.out.println("Performance data updated successfully.");
+                        return;
+                    }
+                }
+                if (found) break;
+                System.out.println("Employee not found. Please try again.");
+            } else {
+                System.out.println("Invalid ID format. ID must be 7 characters long and start with 'S'.");
             }
         }
-        System.out.println("Employee not found.");
     }
+
 
     private static void generateReports(Scanner scanner) {
         System.out.println("Choose report type:");
